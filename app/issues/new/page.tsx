@@ -6,10 +6,10 @@ const page = () => {
 	return (
 		<div className="max-w-xl space-y-3">
 			<TextField.Root>
-				<TextField.Input placeholder="Title" />
+				<TextField.Input placeholder="عنوان" />
 			</TextField.Root>
-			<TextArea placeholder="Description" />
-			<Button>Submit New Issue</Button>
+			<TextArea placeholder="شرح..." />
+			<Button>ارسال مشکل جدید</Button>
 		</div>
 	);
 };

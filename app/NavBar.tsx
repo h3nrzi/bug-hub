@@ -9,16 +9,16 @@ const NavBar = () => {
 	const currentPath = usePathname();
 
 	const links = [
-		{ label: 'Dashboard', href: '/' },
-		{ label: 'Issues', href: '/issues' }
+		{ label: 'داشبورد', href: '/' },
+		{ label: 'مشکلات', href: '/issues' }
 	];
 
 	return (
-		<nav className="flex space-x-6 border-b mb-5 px-5 h-14 items-center">
+		<nav className="flex gap-6 border-b mb-5 px-5 h-14 items-center">
 			<Link href="/">
 				<AiFillBug />
 			</Link>
-			<ul className="flex space-x-6">
+			<ul className="flex gap-6">
 				{links.map((link) => (
 					<Link
 						href={link.href}
