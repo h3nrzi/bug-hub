@@ -6,7 +6,7 @@ const page = () => {
 	return (
 		<div className="max-w-xl space-y-3">
 			<TextField.Root>
-				<TextField.Input placeholder="عنوان" />
+				<TextField.Input placeholder="عنوان" style={{ padding: '5px' }} />
 			</TextField.Root>
 			<TextArea placeholder="شرح..." />
 			<Button>ارسال مشکل جدید</Button>
