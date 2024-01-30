@@ -11,12 +11,14 @@ import 'easymde/dist/easymde.min.css';
 import { z } from 'zod';
 import { createIssueSchema } from '../../validationSchema';
 import ErrorMessage from '@/app/components/ErrorMessage';
+import Spinner from '@/app/components/Spinner';
 
 type IssueForms = z.infer<typeof createIssueSchema>;
 
 const NewIssuePage = () => {
 	const router = useRouter();
 	const [error, setError] = useState('');
+	const [isSubmitting, setSubmitting] = useState(false);
 
 	const {
 		register,
@@ -36,9 +38,11 @@ const NewIssuePage = () => {
 
 	const onSubmit = async (data: IssueForms) => {
 		try {
+			setSubmitting(true);
 			await axios.post('/api/issues', data);
 			router.push('/issues');
 		} catch (error) {
+			setSubmitting(false);
 			setError('یک خطای غیرمنتظره رخ داد!');
 		}
 	};
@@ -70,7 +74,7 @@ const NewIssuePage = () => {
 				/>
 				<ErrorMessage>{errors.description?.message}</ErrorMessage>
 
-				<Button>ارسال مشکل جدید</Button>
+				<Button disabled={isSubmitting}>ارسال مشکل جدید {isSubmitting && <Spinner />}</Button>
 			</form>
 		</div>
 	);
