@@ -2,11 +2,14 @@ import '@radix-ui/themes/styles.css';
 import './theme-config.css';
 import './globals.css';
 import type { Metadata } from 'next';
-import { Theme, ThemePanel } from '@radix-ui/themes';
+import { Theme } from '@radix-ui/themes';
 import { Inter } from 'next/font/google';
+import localFont from 'next/font/local';
+
 import NavBar from './NavBar';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+const Yekan = localFont({ src: '../public/Yekan.ttf', variable: '--font-yekan' });
 
 export const metadata: Metadata = {
 	title: 'Create Next App',
@@ -16,7 +19,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang="en">
-			<body className={inter.variable} dir="rtl">
+			<body className={Yekan.variable} dir="rtl">
 				<Theme accentColor="violet">
 					<NavBar />
 					<main className="p-5">{children}</main>
