@@ -2,7 +2,7 @@ import '@radix-ui/themes/styles.css';
 import './theme-config.css';
 import './globals.css';
 import type { Metadata } from 'next';
-import { Theme } from '@radix-ui/themes';
+import { Theme, ThemePanel } from '@radix-ui/themes';
 import { Inter } from 'next/font/google';
 import NavBar from './NavBar';
 
@@ -17,7 +17,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 	return (
 		<html lang="en">
 			<body className={inter.variable} dir="rtl">
-				<Theme>
+				<Theme accentColor="violet">
 					<NavBar />
 					<main className="p-5">{children}</main>
 					{/* <ThemePanel /> */}
