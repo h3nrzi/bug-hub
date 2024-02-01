@@ -35,7 +35,7 @@ const LoadingIssuesPage = () => {
 							<Table.Cell justify="end">
 								<Skeleton />
 								<div className="block md:hidden mt-2">
-									<Skeleton />
+									<Skeleton width="25%" />
 								</div>
 							</Table.Cell>
 						</Table.Row>
