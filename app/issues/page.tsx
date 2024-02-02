@@ -1,9 +1,9 @@
 import prisma from '@/prisma/client';
-import { Table, TableColumnHeaderCell } from '@radix-ui/themes';
+import { Table } from '@radix-ui/themes';
 import IssueStatusBadge from '../components/IssueStatusBadge';
 import delay from 'delay';
 import IssueActions from './IssueActions';
-import Link from 'next/link';
+import Link from '@/app/components/Link';
 
 const IssuesPage = async () => {
 	const issues = await prisma.issue.findMany();
@@ -17,13 +17,13 @@ const IssuesPage = async () => {
 			<Table.Root variant="surface">
 				<Table.Header>
 					<Table.Row>
-						<TableColumnHeaderCell className="hidden md:table-cell" justify="end">
+						<Table.ColumnHeaderCell className="hidden md:table-cell" justify="end">
 							ایجاد شده
-						</TableColumnHeaderCell>
-						<TableColumnHeaderCell className="hidden md:table-cell" justify="end">
+						</Table.ColumnHeaderCell>
+						<Table.ColumnHeaderCell className="hidden md:table-cell" justify="end">
 							وضعیت
-						</TableColumnHeaderCell>
-						<TableColumnHeaderCell justify="end">عنوان</TableColumnHeaderCell>
+						</Table.ColumnHeaderCell>
+						<Table.ColumnHeaderCell justify="end">عنوان</Table.ColumnHeaderCell>
 					</Table.Row>
 				</Table.Header>
 				<Table.Body>
