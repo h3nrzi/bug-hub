@@ -8,7 +8,7 @@ import axios from 'axios';
 import { useMemo, useState } from 'react';
 import 'easymde/dist/easymde.min.css';
 import { z } from 'zod';
-import { createIssueSchema } from '../../validationSchema';
+import { issueSchema } from '../../validationSchema';
 import ErrorMessage from '@/app/components/ErrorMessage';
 import Spinner from '@/app/components/Spinner';
 import dynamic from 'next/dynamic';
@@ -16,7 +16,7 @@ import { Issue } from '@prisma/client';
 
 const SimpleMDE = dynamic(() => import('react-simplemde-editor'), { ssr: false });
 
-type IssueFormsData = z.infer<typeof createIssueSchema>;
+type IssueFormsData = z.infer<typeof issueSchema>;
 
 const IssueFrom = ({ issue }: { issue?: Issue }) => {
 	const router = useRouter();
@@ -29,7 +29,7 @@ const IssueFrom = ({ issue }: { issue?: Issue }) => {
 		handleSubmit,
 		formState: { errors }
 	} = useForm<IssueFormsData>({
-		resolver: zodResolver(createIssueSchema)
+		resolver: zodResolver(issueSchema)
 	});
 
 	const optionsSimpleMDE = useMemo(() => {
