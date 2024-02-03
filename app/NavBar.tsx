@@ -10,7 +10,7 @@ const NavBar = () => {
 
 	const links = [
 		{ label: 'داشبورد', href: '/' },
-		{ label: 'مشکلات', href: '/issues' }
+		{ label: 'باگ ها', href: '/issues' }
 	];
 
 	return (

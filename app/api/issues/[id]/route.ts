@@ -3,7 +3,6 @@ import { issueSchema } from '@/app/validationSchema';
 import prisma from '@/prisma/client';
 
 export const PATCH = async (
-	//
 	request: NextRequest,
 	{ params }: { params: { id: string } }
 ) => {

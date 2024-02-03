@@ -5,7 +5,7 @@ const IssueActions = () => {
 	return (
 		<div className="mb-5">
 			<Button>
-				<Link href="/issues/new">مشکل جدید</Link>
+				<Link href="/issues/new">ایجاد کردن باگ جدید</Link>
 			</Button>
 		</div>
 	);
