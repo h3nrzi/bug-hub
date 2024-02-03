@@ -14,7 +14,7 @@ const IssuesPage = async () => {
 				<Table.Header>
 					<Table.Row>
 						<Table.ColumnHeaderCell className="hidden md:table-cell" justify="end">
-							ایجاد شده
+							ایجاد شده در تاریخ
 						</Table.ColumnHeaderCell>
 						<Table.ColumnHeaderCell className="hidden md:table-cell" justify="end">
 							وضعیت
@@ -45,4 +45,5 @@ const IssuesPage = async () => {
 	);
 };
 
+export const dynamic = 'force-dynamic';
 export default IssuesPage;
