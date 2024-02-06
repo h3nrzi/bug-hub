@@ -8,21 +8,12 @@ import Skeleton from 'react-loading-skeleton';
 import toast, { Toaster } from 'react-hot-toast';
 
 const AssigneeSelect = ({ issue }: { issue: Issue }) => {
-	const {
-		data: users,
-		error,
-		isLoading
-	} = useQuery({
-		queryKey: ['users'],
-		queryFn: () => axios.get<User[]>('/api/users').then((res) => res.data),
-		staleTime: 60 * 1000, //60s
-		retry: 3
-	});
+	const { data: users, error, isLoading } = useUsers();
 
 	if (isLoading) return <Skeleton height="2rem" />;
 	if (error) return null;
 
-	const onValueChange = (userId: string) => {
+	const assignIssue = (userId: string) => {
 		axios
 			.patch('/api/issues/' + issue.id, {
 				assignedToUserId: userId || null
@@ -38,7 +29,7 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
 			<Select.Root
 				defaultValue={issue.assignedToUserId || ''}
 				dir="rtl"
-				onValueChange={(userId) => onValueChange(userId)}
+				onValueChange={(userId) => assignIssue(userId)}
 			>
 				<Select.Trigger variant="soft" />
 				<Select.Content>
@@ -56,5 +47,13 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
 		</>
 	);
 };
+
+const useUsers = () =>
+	useQuery({
+		queryKey: ['users'],
+		queryFn: () => axios.get<User[]>('/api/users').then((res) => res.data),
+		// staleTime: 60 * 1000, //60s
+		retry: 3
+	});
 
 export default AssigneeSelect;
