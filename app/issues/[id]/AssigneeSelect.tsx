@@ -5,6 +5,7 @@ import { Select } from '@radix-ui/themes';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import Skeleton from 'react-loading-skeleton';
+import toast, { Toaster } from 'react-hot-toast';
 
 const AssigneeSelect = ({ issue }: { issue: Issue }) => {
 	const {
@@ -21,30 +22,38 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
 	if (isLoading) return <Skeleton height="2rem" />;
 	if (error) return null;
 
+	const onValueChange = (userId: string) => {
+		axios
+			.patch('/api/issues/' + issue.id, {
+				assignedToUserId: userId || null
+			})
+			.then(() => toast.success('تغییرات ذخیره شد'))
+			.catch(() => toast.error('تغییرات ذخیره نشد'));
+	};
+
 	return (
-		<Select.Root
-			defaultValue={issue.assignedToUserId || ''}
-			dir="rtl"
-			onValueChange={(userId) => {
-				axios.patch('/api/issues/' + issue.id, { assignedToUserId: userId || null });
-			}}
-		>
-			<Select.Trigger />
+		<>
+			<Toaster></Toaster>
 
-			<Select.Content>
-				<Select.Group dir="rtl">
-					<Select.Label>پیشنهادها</Select.Label>
-
-					<Select.Item value="">واگذار نشده</Select.Item>
-
-					{users?.map((user) => (
-						<Select.Item key={user.id} value={user.id}>
-							{user.name}
-						</Select.Item>
-					))}
-				</Select.Group>
-			</Select.Content>
-		</Select.Root>
+			<Select.Root
+				defaultValue={issue.assignedToUserId || ''}
+				dir="rtl"
+				onValueChange={(userId) => onValueChange(userId)}
+			>
+				<Select.Trigger variant="soft" />
+				<Select.Content>
+					<Select.Group dir="rtl">
+						<Select.Label>پیشنهادها</Select.Label>
+						<Select.Item value="">واگذار نشده</Select.Item>
+						{users?.map((user) => (
+							<Select.Item key={user.id} value={user.id}>
+								{user.name}
+							</Select.Item>
+						))}
+					</Select.Group>
+				</Select.Content>
+			</Select.Root>
+		</>
 	);
 };
 
