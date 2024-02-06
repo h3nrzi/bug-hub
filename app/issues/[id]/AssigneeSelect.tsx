@@ -12,6 +12,8 @@ const AssigneeSelect = () => {
 		const fetchUsers = async () => {
 			const { data } = await axios.get<User[]>('/api/users');
 			setUsers(data);
+
+			return data;
 		};
 
 		fetchUsers();
