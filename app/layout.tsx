@@ -8,6 +8,7 @@ import localFont from 'next/font/local';
 
 import NavBar from './NavBar';
 import AuthProvider from './auth/Provider';
+import QueryClientProvider from './QueryClientProvider';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const Yekan = localFont({ src: '../public/Yekan.ttf', variable: '--font-yekan' });
@@ -21,15 +22,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 	return (
 		<html lang="en">
 			<body className={Yekan.variable} dir="rtl">
-				<AuthProvider>
-					<Theme accentColor="violet">
-						<NavBar />
-						<main className="p-5">
-							<Container>{children}</Container>
-						</main>
-						{/* <ThemePanel /> */}
-					</Theme>
-				</AuthProvider>
+				<QueryClientProvider>
+					<AuthProvider>
+						<Theme accentColor="violet">
+							<NavBar />
+							<main className="p-5">
+								<Container>{children}</Container>
+							</main>
+							{/* <ThemePanel /> */}
+						</Theme>
+					</AuthProvider>
+				</QueryClientProvider>
 			</body>
 		</html>
 	);
