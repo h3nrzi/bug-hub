@@ -86,9 +86,7 @@ const IssueFrom = ({ issue }: { issue?: Issue }) => {
 				/>
 				<ErrorMessage>{errors.description?.message}</ErrorMessage>
 
-				<Button disabled={isSubmitting}>
-					{issue ? 'ویرایش باگ' : 'ارسال باگ'} {isSubmitting && <Spinner />}
-				</Button>
+				<Button disabled={isSubmitting}>تایید {isSubmitting && <Spinner />}</Button>
 			</form>
 		</div>
 	);
