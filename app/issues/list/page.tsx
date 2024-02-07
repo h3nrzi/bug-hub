@@ -1,42 +1,60 @@
 import { IssueStatusBadge, Link } from '@/app/components';
 import prisma from '@/prisma/client';
-import { Table } from '@radix-ui/themes';
+import { Box, Table } from '@radix-ui/themes';
 import IssueActions from './IssueActions';
 import { Issue, Status } from '@prisma/client';
 import NextLink from 'next/link';
 import { ArrowDownIcon, ArrowUpIcon } from '@radix-ui/react-icons';
+import Pagination from '@/app/components/Pagination';
 
 interface Props {
-	searchParams: { status: Status; orderBy: keyof Issue };
+	searchParams: {
+		status: Status;
+		orderBy: keyof Issue;
+		page: string;
+	};
 }
 
 const IssuesPage = async ({ searchParams }: Props) => {
+	//
 	const columns: { label: string; value: keyof Issue; className?: string }[] = [
 		{ label: 'ایجاد شده در', value: 'createdAt', className: 'hidden md:table-cell' },
 		{ label: 'وضعیت', value: 'status', className: 'hidden md:table-cell' },
 		{ label: 'عنوان', value: 'title' }
 	];
 
+	//
 	const statuses = Object.values(Status);
 	const status = statuses.includes(searchParams.status)
 		? searchParams.status
 		: undefined;
 
+	//
+	const where = { status: status };
+
+	//
 	const orderBy = columns.map((c) => c.value).includes(searchParams.orderBy)
 		? { [searchParams.orderBy]: 'asc' }
 		: undefined;
 
+	//
+	const page = parseInt(searchParams.page) || 1;
+	const pageSize = 5;
+
+	//
 	const issues: Issue[] = await prisma.issue.findMany({
-		where: {
-			status: status
-		},
-		orderBy: orderBy
+		where: where,
+		orderBy: orderBy,
+		skip: (page - 1) * pageSize,
+		take: pageSize
 	});
 
-	return (
-		<div>
-			<IssueActions />
+	//
+	const issueCount = await prisma.issue.count({ where: where });
 
+	return (
+		<Box>
+			<IssueActions />
 			<Table.Root variant="surface">
 				<Table.Header>
 					<Table.Row>
@@ -77,7 +95,9 @@ const IssuesPage = async ({ searchParams }: Props) => {
 					))}
 				</Table.Body>
 			</Table.Root>
-		</div>
+
+			<Pagination pageSize={pageSize} currentPage={page} itemCount={issueCount} />
+		</Box>
 	);
 };
 
