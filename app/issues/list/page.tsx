@@ -3,12 +3,20 @@ import prisma from '@/prisma/client';
 import { Table } from '@radix-ui/themes';
 import IssueActions from './IssueActions';
 import { Issue, Status } from '@prisma/client';
+import NextLink from 'next/link';
+import { ArrowDownIcon, ArrowUpIcon } from '@radix-ui/react-icons';
 
 interface Props {
-	searchParams: { status: Status };
+	searchParams: { status: Status; orderBy: keyof Issue };
 }
 
 const IssuesPage = async ({ searchParams }: Props) => {
+	const columns: { label: string; value: keyof Issue; className?: string }[] = [
+		{ label: 'ایجاد شده در', value: 'createdAt', className: 'hidden md:table-cell' },
+		{ label: 'وضعیت', value: 'status', className: 'hidden md:table-cell' },
+		{ label: 'عنوان', value: 'title' }
+	];
+
 	const statuses = Object.values(Status);
 	const status = statuses.includes(searchParams.status)
 		? searchParams.status
@@ -25,13 +33,22 @@ const IssuesPage = async ({ searchParams }: Props) => {
 			<Table.Root variant="surface">
 				<Table.Header>
 					<Table.Row>
-						<Table.ColumnHeaderCell className="hidden md:table-cell" justify="end">
-							ایجاد شده در تاریخ
-						</Table.ColumnHeaderCell>
-						<Table.ColumnHeaderCell className="hidden md:table-cell" justify="end">
-							وضعیت
-						</Table.ColumnHeaderCell>
-						<Table.ColumnHeaderCell justify="end">عنوان</Table.ColumnHeaderCell>
+						{columns.map((c) => (
+							<Table.ColumnHeaderCell
+								className={c.className}
+								key={c.value}
+								justify="end"
+							>
+								{c.value === searchParams.orderBy ? (
+									<ArrowUpIcon className="inline" />
+								) : (
+									<ArrowDownIcon className="inline" />
+								)}
+								<NextLink href={{ query: { ...searchParams, orderBy: c.value } }}>
+									{c.label}
+								</NextLink>
+							</Table.ColumnHeaderCell>
+						))}
 					</Table.Row>
 				</Table.Header>
 				<Table.Body>
