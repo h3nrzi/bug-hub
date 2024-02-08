@@ -1,6 +1,6 @@
 import { IssueStatusBadge, Link } from '@/app/components';
 import { Issue, Status } from '@prisma/client';
-import { ArrowDownIcon, ArrowUpIcon } from '@radix-ui/react-icons';
+import { ArrowUpIcon, DividerHorizontalIcon } from '@radix-ui/react-icons';
 import { Table } from '@radix-ui/themes';
 import NextLink from 'next/link';
 
@@ -16,6 +16,10 @@ interface Props {
 }
 
 const IssueTable = ({ searchParams, issues }: Props) => {
+	const params = new URLSearchParams();
+	if (searchParams.status) params.append('status', searchParams.status);
+	const query = params.size ? '?' + params.toString() : '';
+
 	return (
 		<Table.Root variant="surface">
 			<Table.Header>
@@ -27,13 +31,16 @@ const IssueTable = ({ searchParams, issues }: Props) => {
 							justify="end"
 						>
 							{c.value === searchParams.orderBy ? (
-								<ArrowUpIcon className="inline" />
+								<NextLink href={'/issues/list' + query}>
+									<ArrowUpIcon className="inline" />
+									{c.label}
+								</NextLink>
 							) : (
-								<ArrowDownIcon className="inline" />
+								<NextLink href={{ query: { ...searchParams, orderBy: c.value } }}>
+									<DividerHorizontalIcon className="inline" />
+									{c.label}
+								</NextLink>
 							)}
-							<NextLink href={{ query: { ...searchParams, orderBy: c.value } }}>
-								{c.label}
-							</NextLink>
 						</Table.ColumnHeaderCell>
 					))}
 				</Table.Row>
