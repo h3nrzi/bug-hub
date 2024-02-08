@@ -5,26 +5,26 @@ import { getServerSession } from 'next-auth';
 import authOptions from '../auth/authOptions';
 
 export const POST = async (req: NextRequest) => {
-	const session = await getServerSession(authOptions);
-	if (!session) return NextResponse.json({}, { status: 401 });
+  const session = await getServerSession(authOptions);
+  if (!session) return NextResponse.json({}, { status: 401 });
 
-	// PARSING BODY
-	const body = await req.json();
+  // PARSING BODY
+  const body = await req.json();
 
-	// VALIDATE BODY
-	const validation = issueSchema.safeParse(body);
-	if (!validation.success) {
-		return NextResponse.json(validation.error.format(), { status: 400 });
-	}
+  // VALIDATE BODY
+  const validation = issueSchema.safeParse(body);
+  if (!validation.success) {
+    return NextResponse.json(validation.error.format(), { status: 400 });
+  }
 
-	// CREATING ISSUE
-	const newIssue = await prisma.issue.create({
-		data: {
-			title: body.title,
-			description: body.description
-		}
-	});
+  // CREATING ISSUE
+  const newIssue = await prisma.issue.create({
+    data: {
+      title: body.title,
+      description: body.description
+    }
+  });
 
-	// SEND RESPONSE
-	return NextResponse.json(newIssue, { status: 201 });
+  // SEND RESPONSE
+  return NextResponse.json(newIssue, { status: 201 });
 };

@@ -9,35 +9,35 @@ import authOptions from '@/app/api/auth/authOptions';
 import AssigneeSelect from './AssigneeSelect';
 
 interface Props {
-	params: { id: string };
+  params: { id: string };
 }
 
 const IssueDetailPage = async ({ params }: Props) => {
-	const session = await getServerSession(authOptions);
+  const session = await getServerSession(authOptions);
 
-	// FIXME:
-	// if (typeof params.id !== 'number') notFound();
+  // FIXME:
+  // if (typeof params.id !== 'number') notFound();
 
-	const issue = await prisma.issue.findUnique({
-		where: { id: parseInt(params.id) }
-	});
+  const issue = await prisma.issue.findUnique({
+    where: { id: parseInt(params.id) }
+  });
 
-	if (!issue) notFound();
+  if (!issue) notFound();
 
-	return (
-		<Grid columns={{ initial: '1', sm: '5' }} gap="4">
-			<Box className="md:col-span-4">
-				<IssueDetails issue={issue} />
-			</Box>
-			{session && (
-				<Flex gap="4" direction="column">
-					<AssigneeSelect issue={issue} />
-					<EditIssueButton issueId={issue.id} />
-					<DeleteIssueButton issueId={issue.id} />
-				</Flex>
-			)}
-		</Grid>
-	);
+  return (
+    <Grid columns={{ initial: '1', sm: '5' }} gap="4">
+      <Box className="md:col-span-4">
+        <IssueDetails issue={issue} />
+      </Box>
+      {session && (
+        <Flex gap="4" direction="column">
+          <AssigneeSelect issue={issue} />
+          <EditIssueButton issueId={issue.id} />
+          <DeleteIssueButton issueId={issue.id} />
+        </Flex>
+      )}
+    </Grid>
+  );
 };
 
 export default IssueDetailPage;

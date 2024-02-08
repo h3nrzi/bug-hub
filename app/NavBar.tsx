@@ -9,90 +9,90 @@ import { Avatar, Box, Container, DropdownMenu, Flex, Text } from '@radix-ui/them
 import { Skeleton, Spinner } from '@/app/components';
 
 const NavBar = () => {
-	return (
-		<nav className="border-b mb-5 py-4 px-6 h-14">
-			<Container>
-				<Flex justify="between" align="center">
-					<Flex gap="6" align="center">
-						<Link href="/">
-							<AiFillBug />
-						</Link>
-						<NavLinks />
-					</Flex>
-					<AuthStatus />
-				</Flex>
-			</Container>
-		</nav>
-	);
+  return (
+    <nav className="border-b mb-5 py-4 px-6 h-14">
+      <Container>
+        <Flex justify="between" align="center">
+          <Flex gap="6" align="center">
+            <Link href="/">
+              <AiFillBug />
+            </Link>
+            <NavLinks />
+          </Flex>
+          <AuthStatus />
+        </Flex>
+      </Container>
+    </nav>
+  );
 };
 
 const NavLinks = () => {
-	const currentPath = usePathname();
+  const currentPath = usePathname();
 
-	const links = [
-		{ label: 'داشبورد', href: '/' },
-		{ label: 'باگ ها', href: '/issues/list' }
-	];
+  const links = [
+    { label: 'داشبورد', href: '/' },
+    { label: 'باگ ها', href: '/issues/list' }
+  ];
 
-	return (
-		<ul className="flex gap-6">
-			{links.map((link) => (
-				<li key={link.href}>
-					<Link
-						href={link.href}
-						className={classnames({
-							'nav-link': true,
-							'!text-zinc-900 font-extrabold': link.href === currentPath
-						})}
-					>
-						{link.label}
-					</Link>
-				</li>
-			))}
-		</ul>
-	);
+  return (
+    <ul className="flex gap-6">
+      {links.map((link) => (
+        <li key={link.href}>
+          <Link
+            href={link.href}
+            className={classnames({
+              'nav-link': true,
+              '!text-zinc-900 font-extrabold': link.href === currentPath
+            })}
+          >
+            {link.label}
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
 };
 
 const AuthStatus = () => {
-	const { status, data: session } = useSession();
+  const { status, data: session } = useSession();
 
-	if (status === 'loading') return <Spinner />;
+  if (status === 'loading') return <Spinner />;
 
-	if (status === 'unauthenticated')
-		return (
-			<Link className="nav-link" href="/api/auth/signin">
-				ثبت نام / ورود
-			</Link>
-		);
+  if (status === 'unauthenticated')
+    return (
+      <Link className="nav-link" href="/api/auth/signin">
+        ثبت نام / ورود
+      </Link>
+    );
 
-	return (
-		<Box>
-			<DropdownMenu.Root>
-				<DropdownMenu.Trigger>
-					<Avatar
-						className="cursor-pointer"
-						src={session!.user!.image!}
-						fallback="!"
-						size="2"
-						radius="full"
-						referrerPolicy="no-referrer"
-					/>
-				</DropdownMenu.Trigger>
+  return (
+    <Box>
+      <DropdownMenu.Root>
+        <DropdownMenu.Trigger>
+          <Avatar
+            className="cursor-pointer"
+            src={session!.user!.image!}
+            fallback="!"
+            size="2"
+            radius="full"
+            referrerPolicy="no-referrer"
+          />
+        </DropdownMenu.Trigger>
 
-				<DropdownMenu.Content>
-					<DropdownMenu.Label>
-						<Text size="2">{session!.user!.email}</Text>
-					</DropdownMenu.Label>
+        <DropdownMenu.Content>
+          <DropdownMenu.Label>
+            <Text size="2">{session!.user!.email}</Text>
+          </DropdownMenu.Label>
 
-					<DropdownMenu.Item dir="rtl">
-						<Link href="/api/auth/signout" className="w-full cursor-pointer">
-							خروج
-						</Link>
-					</DropdownMenu.Item>
-				</DropdownMenu.Content>
-			</DropdownMenu.Root>
-		</Box>
-	);
+          <DropdownMenu.Item dir="rtl">
+            <Link href="/api/auth/signout" className="w-full cursor-pointer">
+              خروج
+            </Link>
+          </DropdownMenu.Item>
+        </DropdownMenu.Content>
+      </DropdownMenu.Root>
+    </Box>
+  );
 };
 
 export default NavBar;

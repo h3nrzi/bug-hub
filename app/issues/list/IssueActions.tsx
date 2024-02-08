@@ -3,14 +3,14 @@ import Link from 'next/link';
 import IssueStatusFilter from './IssueStatusFilter';
 
 const IssueActions = () => {
-	return (
-		<Flex justify="between">
-			<IssueStatusFilter />
-			<Button>
-				<Link href="/issues/new">باگ جدید</Link>
-			</Button>
-		</Flex>
-	);
+  return (
+    <Flex justify="between">
+      <IssueStatusFilter />
+      <Button>
+        <Link href="/issues/new">باگ جدید</Link>
+      </Button>
+    </Flex>
+  );
 };
 
 export default IssueActions;
