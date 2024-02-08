@@ -1,4 +1,4 @@
-import { IssueStatusBadge, Link } from '@/app/components';
+import { IssueStatusBadge } from '@/app/components';
 import { Issue, Status } from '@prisma/client';
 import { ArrowUpIcon, DividerHorizontalIcon } from '@radix-ui/react-icons';
 import { Table } from '@radix-ui/themes';
@@ -25,19 +25,15 @@ const IssueTable = ({ searchParams, issues }: Props) => {
       <Table.Header>
         <Table.Row>
           {columns.map((c) => (
-            <Table.ColumnHeaderCell
-              className={c.className}
-              key={c.value}
-              justify="end"
-            >
+            <Table.ColumnHeaderCell className={c.className} key={c.value} justify="end">
               {c.value === searchParams.orderBy ? (
                 <NextLink href={'/issues/list' + query}>
-                  <ArrowUpIcon className="inline" />
+                  <ArrowUpIcon className="inline me-2" />
                   {c.label}
                 </NextLink>
               ) : (
                 <NextLink href={{ query: { ...searchParams, orderBy: c.value } }}>
-                  <DividerHorizontalIcon className="inline" />
+                  <DividerHorizontalIcon className="inline me-2" />
                   {c.label}
                 </NextLink>
               )}
@@ -55,7 +51,12 @@ const IssueTable = ({ searchParams, issues }: Props) => {
               <IssueStatusBadge status={issue.status} />
             </Table.Cell>
             <Table.Cell justify="end">
-              <Link href={`/issues/${issue.id}`}>{issue.title}</Link>
+              <NextLink
+                className="hover:underline hover:text-purple-800 transition-colors"
+                href={`/issues/${issue.id}`}
+              >
+                {issue.title}
+              </NextLink>
               <div className="block md:hidden mt-2">
                 <IssueStatusBadge status={issue.status} />
               </div>
