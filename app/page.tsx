@@ -29,4 +29,5 @@ export const metadata: Metadata = {
   description: 'View a summary of project issues'
 };
 
+export const dynamic = 'force-dynamic';
 export default Home;
