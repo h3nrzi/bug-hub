@@ -14,16 +14,16 @@ const IssueSummary = ({ open, inProgress, closed }: Props) => {
     value: number;
     status: Status;
   }[] = [
-    { label: 'جدید', value: open, status: 'OPEN' },
+    { label: 'به اتمام رسیده', value: closed, status: 'CLOSED' },
     { label: 'در دست اقدام', value: inProgress, status: 'IN_PROGRESS' },
-    { label: 'به اتمام رسیده', value: closed, status: 'CLOSED' }
+    { label: 'جدید', value: open, status: 'OPEN' }
   ];
   return (
     <Box>
       <Heading size="4" mb="5" className="text-center">
         آمار
       </Heading>
-      <Flex gap="4" justify="center">
+      <Flex gap="6" justify="center">
         {statuses.map((s) => (
           <Card
             key={s.label}
