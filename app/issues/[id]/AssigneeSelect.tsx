@@ -31,7 +31,7 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
         dir="rtl"
         onValueChange={(userId) => assignIssue(userId)}
       >
-        <Select.Trigger variant="soft" />
+        <Select.Trigger variant="soft" color="gray" />
         <Select.Content>
           <Select.Group dir="rtl">
             <Select.Label>پیشنهادها</Select.Label>
