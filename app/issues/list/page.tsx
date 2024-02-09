@@ -12,9 +12,7 @@ interface Props {
 
 const IssuesPage = async ({ searchParams }: Props) => {
   const statuses = Object.values(Status);
-  const status = statuses.includes(searchParams.status)
-    ? searchParams.status
-    : undefined;
+  const status = statuses.includes(searchParams.status) ? searchParams.status : undefined;
 
   const where = { status: status };
 
@@ -45,7 +43,7 @@ const IssuesPage = async ({ searchParams }: Props) => {
 
 export const dynamic = 'force-dynamic';
 export const metadata: Metadata = {
-  title: 'Issue Tracker - Issue List',
+  title: 'Bug Hub - Bug List',
   description: 'View all project issues'
 };
 export default IssuesPage;

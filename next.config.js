@@ -25,7 +25,7 @@ module.exports = withSentryConfig(
     // Suppresses source map uploading logs during build
     silent: true,
     org: 'sama-kb',
-    project: 'issue-tracker'
+    project: 'bug-hub'
   },
   {
     // For all available options, see:

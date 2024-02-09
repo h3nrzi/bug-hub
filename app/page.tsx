@@ -25,7 +25,7 @@ const Home = async ({ searchParams }: { searchParams: { page: string } }) => {
 };
 
 export const metadata: Metadata = {
-  title: 'Issue Tracker - Dashboard',
+  title: 'Bug Hub - Dashboard',
   description: 'View a summary of project issues'
 };
 
