@@ -25,18 +25,11 @@ const IssueSummary = ({ open, inProgress, closed }: Props) => {
       </Heading>
       <Flex gap="6" justify="center">
         {statuses.map((s) => (
-          <Card
-            key={s.label}
-            className="w-36 hover:text-purple-800 transition-colors"
-          >
+          <Card key={s.label} className="w-36 hover:text-purple-800 transition-colors">
             <Link href={'/issues/list?status=' + s.status}>
               <Flex direction="column" className="text-center">
-                <Text className="font-medium" size="3">
-                  {s.label}
-                </Text>
-                <Text className="font-extrabold" size="5">
-                  {s.value}
-                </Text>
+                <Text className="font-medium sm:text-lg">{s.label}</Text>
+                <Text className="font-extrabold sm:text-2xl">{s.value}</Text>
               </Flex>
             </Link>
           </Card>
